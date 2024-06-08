@@ -1,0 +1,26 @@
+table:
+  name: Tags
+  schema: public
+array_relationships:
+  - name: RecipeTags
+    using:
+      foreign_key_constraint_on:
+        column: tagId
+        table:
+          name: RecipeTag
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - tagName
+        - id
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - tagName
+        - id
+      filter: {}
+    comment: ""

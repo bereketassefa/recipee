@@ -1,0 +1,39 @@
+table:
+  name: RecipeTag
+  schema: public
+object_relationships:
+  - name: Recipe
+    using:
+      foreign_key_constraint_on: recipeId
+  - name: Tag
+    using:
+      foreign_key_constraint_on: tagId
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        Recipe:
+          userId:
+            _eq: X-Hasura-User-Id
+      columns:
+        - id
+        - recipeId
+        - tagId
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - recipeId
+        - tagId
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - id
+        - recipeId
+        - tagId
+      filter: {}
+    comment: ""

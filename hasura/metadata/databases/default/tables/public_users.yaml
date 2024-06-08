@@ -1,0 +1,70 @@
+table:
+  name: users
+  schema: public
+array_relationships:
+  - name: Comments
+    using:
+      foreign_key_constraint_on:
+        column: userId
+        table:
+          name: Comment
+          schema: public
+  - name: Favorites
+    using:
+      foreign_key_constraint_on:
+        column: userId
+        table:
+          name: Favorite
+          schema: public
+  - name: Recipes
+    using:
+      foreign_key_constraint_on:
+        column: userId
+        table:
+          name: Recipe
+          schema: public
+  - name: userLikes
+    using:
+      foreign_key_constraint_on:
+        column: userId
+        table:
+          name: userLikes
+          schema: public
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - email
+        - firstName
+        - id
+        - isPublic
+        - lastName
+        - profileImg
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - email
+        - firstName
+        - id
+        - isPublic
+        - lastName
+        - profileImg
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - email
+        - firstName
+        - isPublic
+        - lastName
+        - password
+        - profileImg
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      check: null
+    comment: ""

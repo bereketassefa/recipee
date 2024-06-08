@@ -1,0 +1,126 @@
+table:
+  name: Recipe
+  schema: public
+object_relationships:
+  - name: Favorite
+    using:
+      foreign_key_constraint_on:
+        column: receipeId
+        table:
+          name: Favorite
+          schema: public
+  - name: user
+    using:
+      foreign_key_constraint_on: userId
+  - name: userLike
+    using:
+      foreign_key_constraint_on:
+        column: recipeId
+        table:
+          name: userLikes
+          schema: public
+array_relationships:
+  - name: Comments
+    using:
+      foreign_key_constraint_on:
+        column: recipeId
+        table:
+          name: Comment
+          schema: public
+  - name: Favorites
+    using:
+      foreign_key_constraint_on:
+        column: receipeId
+        table:
+          name: Favorite
+          schema: public
+  - name: Ingredients
+    using:
+      foreign_key_constraint_on:
+        column: recipeId
+        table:
+          name: Ingredients
+          schema: public
+  - name: RecipeTags
+    using:
+      foreign_key_constraint_on:
+        column: recipeId
+        table:
+          name: RecipeTag
+          schema: public
+  - name: recipeImages
+    using:
+      foreign_key_constraint_on:
+        column: recipeId
+        table:
+          name: recipeImages
+          schema: public
+  - name: recipeSteps
+    using:
+      foreign_key_constraint_on:
+        column: recipeId
+        table:
+          name: recipeSteps
+          schema: public
+  - name: userLikes
+    using:
+      foreign_key_constraint_on:
+        column: recipeId
+        table:
+          name: userLikes
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        userId:
+          _eq: X-Hasura-User-Id
+      columns:
+        - duration
+        - description
+        - name
+        - id
+        - userId
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - duration
+        - description
+        - name
+        - id
+        - userId
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - duration
+        - description
+        - name
+        - id
+        - userId
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - description
+        - duration
+        - id
+        - name
+        - userId
+      filter:
+        userId:
+          _eq: X-Hasura-User-Id
+      check: null
+    comment: ""
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        userId:
+          _eq: X-Hasura-User-Id
+    comment: ""

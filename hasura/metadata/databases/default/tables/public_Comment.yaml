@@ -1,0 +1,47 @@
+table:
+  name: Comment
+  schema: public
+object_relationships:
+  - name: Recipe
+    using:
+      foreign_key_constraint_on: recipeId
+  - name: user
+    using:
+      foreign_key_constraint_on: userId
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user:
+          id:
+            _eq: X-Hasura-User-Id
+      columns:
+        - rating
+        - comment
+        - id
+        - recipeId
+        - userId
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - rating
+        - comment
+        - id
+        - recipeId
+        - userId
+      filter: {}
+      allow_aggregations: true
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - rating
+        - comment
+        - id
+        - recipeId
+        - userId
+      filter: {}
+      allow_aggregations: true
+    comment: ""

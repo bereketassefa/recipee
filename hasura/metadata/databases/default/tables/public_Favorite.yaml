@@ -1,0 +1,55 @@
+table:
+  name: Favorite
+  schema: public
+object_relationships:
+  - name: Recipe
+    using:
+      foreign_key_constraint_on: receipeId
+  - name: user
+    using:
+      foreign_key_constraint_on: userId
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      set:
+        userId: x-hasura-User-Id
+      columns:
+        - id
+        - receipeId
+        - userId
+    comment: ""
+select_permissions:
+  - role: anonymous
+    permission:
+      columns:
+        - id
+        - receipeId
+        - userId
+      filter: {}
+    comment: ""
+  - role: user
+    permission:
+      columns:
+        - id
+        - receipeId
+        - userId
+      filter: {}
+    comment: ""
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - receipeId
+      filter:
+        userId:
+          _eq: X-Hasura-User-Id
+      check: null
+    comment: ""
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        userId:
+          _eq: X-Hasura-User-Id
+    comment: ""
